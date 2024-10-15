@@ -8,7 +8,6 @@ let getHomePage = async (req, res) => {
             data: JSON.stringify(data)
         });
     } catch (error) {  // Thay 'e' thành 'error' cho đồng nhất
-        console.log(error);  // Sửa 'e' thành 'error' để in ra lỗi
     }
 };
 
@@ -26,14 +25,11 @@ let getUserCRUD = async (req, res) => {
             data: data
         });
     } catch (error) {
-        console.error(error);
-        return res.status(500).send('Internal Server Error');
+
     }
 };
 
 let postCRUD = async (req, res) => {
-    let message = await CRUDservice.createNewUser(req.body)
-    console.log(message)
     return res.send('post crud to server');
 };
 let getEditCRUD = async (req, res) => {
@@ -42,7 +38,6 @@ let getEditCRUD = async (req, res) => {
         if (userId) {
             let userData = await CRUDservice.getUserInfoById(userId);
             if (userData) {
-                console.log(userData);
                 return res.render('editCRUD.ejs', { user: userData });
             } else {
                 return res.send('User not Found');
@@ -51,8 +46,6 @@ let getEditCRUD = async (req, res) => {
             return res.send('User not Found');
         }
     } catch (error) {
-        console.error(error);
-        return res.status(500).send('Internal Server Error');
     }
 }
 let putCRUD = async (req, res) => {
@@ -62,6 +55,17 @@ let putCRUD = async (req, res) => {
         data: allUsers
     });
 }
+let getDeleteIdCRUD = async (req, res) => {
+    let id = req.query.id;
+    if (id) {
+        await CRUDservice.DeleteCRUD(id);
+        return res.send('Delete user succed!')
+    }
+    else {
+        return res.send('not found User')
+
+    }
+}
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
@@ -70,4 +74,5 @@ module.exports = {
     getUserCRUD: getUserCRUD,
     getEditCRUD: getEditCRUD,
     putCRUD: putCRUD,
+    getDeleteIdCRUD: getDeleteIdCRUD,
 };

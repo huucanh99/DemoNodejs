@@ -82,7 +82,22 @@ let updateUserData = (data) => {
                 resolve();
             }
         } catch (error) {
-            console.log(error)
+            reject(error);
+        }
+    })
+}
+let DeleteCRUD = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: id }
+            })
+            if (user) {
+                await user.destroy();
+            }
+            resolve();
+        } catch (error) {
+            reject(error);
         }
     })
 }
@@ -91,4 +106,5 @@ module.exports = {
     getAllUser: getAllUser,
     getUserInfoById: getUserInfoById,
     updateUserData: updateUserData,
+    DeleteCRUD: DeleteCRUD,
 }
