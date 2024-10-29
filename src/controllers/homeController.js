@@ -2,6 +2,7 @@ import db from '../models/index';
 import CRUDservice from '../services/CRUDservice';
 
 let getHomePage = async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     try {
         let data = await db.User.findAll();
         return res.render('homePages.ejs', {
